@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2012-12-6 15:33:40 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.cpst.postal.settlement.user.model.BResourcePermission" table="B_PERM_FUNC_PERMISSIONS" >
+		<id name="seqId" type="java.lang.Integer" column="SEQ_ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_USER_PERM</param>
+			</generator>
+		</id>
+        <property name="RType" type="java.lang.Integer">
+            <column name="R_TYPE" precision="2" scale="0" />
+        </property>
+        <property name="resources" type="string">
+            <column name="RESOURCES" length="256" />
+        </property>
+        <property name="permission" type="string">
+            <column name="PERMISSION" length="32" />
+        </property>
+        <!-- 
+        <property name="modulename" type="string">
+            <column name="MODULENAME" length="40" />
+        </property>
+         -->
+        <property name="funcname" type="string">
+            <column name="FUNCNAME" length="80" />
+        </property>
+         <!-- 
+        <property name="funcCode" type="big_decimal">
+            <column name="FUNC_CODE" precision="38" scale="0" />
+        </property>
+         -->
+        <property name="funcdesc" type="string">
+            <column name="FUNCDESC" length="80" />
+        </property>
+        <property name="orders" type="java.lang.Integer">
+            <column name="ORDERS" precision="4" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2012-12-7 11:01:57 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.cpst.postal.settlement.user.model.BPermProvCity" table="B_PERM_PROV_CITY" >
+        <comment>�������ñ�</comment>
+        <id name="districtCode" type="string">
+            <column name="DISTRICT_CODE" length="6" />
+            <generator class="assigned" />
+        </id>
+        <property name="provinceName" type="string">
+            <column name="PROVINCE_NAME" length="22">
+                <comment>ʡ��</comment>
+            </column>
+        </property>
+        <property name="cityName" type="string">
+            <column name="CITY_NAME" length="22">
+                <comment>������</comment>
+            </column>
+        </property>
+        <property name="countyName" type="string">
+            <column name="COUNTY_NAME" length="40">
+                <comment>����</comment>
+            </column>
+        </property>
+        <property name="provinceSim" type="string">
+            <column name="PROVINCE_SIM" length="12">
+                <comment>ʡƴ����</comment>
+            </column>
+        </property>
+        <property name="citySim" type="string">
+            <column name="CITY_SIM" length="12">
+                <comment>����ƴ����</comment>
+            </column>
+        </property>
+        <property name="countySim" type="string">
+            <column name="COUNTY_SIM" length="12">
+                <comment>����ƴ����</comment>
+            </column>
+        </property>
+        <property name="degree" type="char">
+            <column name="DEGREE" length="1" not-null="true">
+                <comment>ά��</comment>
+            </column>
+        </property>
+        <property name="dataDate" type="timestamp">
+            <column name="DATA_DATE" length="7" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2012-12-7 10:45:34 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.cpst.postal.settlement.user.model.BPermExchangeOffice" table="B_PERM_EXCHANGE_OFFICE" >
+		<id name="seqId" type="java.lang.Integer" column="SEQ_ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_USER_PERM</param>
+			</generator>
+		</id>
+        <property name="BCode" type="string">
+            <column name="B_CODE" length="20">
+                <comment>3λ�����ִ���</comment>
+            </column>
+        </property>
+        <property name="BEname" type="string">
+            <column name="B_ENAME" length="20">
+                <comment>��������ƴ��</comment>
+            </column>
+        </property>
+        <property name="BCname" type="string">
+            <column name="B_CNAME" length="20">
+                <comment>������������</comment>
+            </column>
+        </property>
+        <property name="BProvcode" type="string">
+            <column name="B_PROVCODE" length="2">
+                <comment>ʡ�����</comment>
+            </column>
+        </property>
+        <property name="BProvname" type="string">
+            <column name="B_PROVNAME" length="20">
+                <comment>ʡ��</comment>
+            </column>
+        </property>
+        <property name="BCityname" type="string">
+            <column name="B_CITYNAME" length="20">
+                <comment>������������</comment>
+            </column>
+        </property>
+        <property name="BCitycode" type="string">
+            <column name="B_CITYCODE" length="6">
+                <comment>���������д���</comment>
+            </column>
+        </property>
+        <property name="dataDate" type="timestamp">
+            <column name="DATA_DATE" length="7">
+                <comment>��������</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

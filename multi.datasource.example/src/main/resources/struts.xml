@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.action.excludePattern" value="/cxf/.*,/frameset*,/output*" />
+
+	<package name="ps-default" namespace="/" extends="struts-default">
+
+		<interceptors>
+
+			<interceptor name="requestContextInterceptor"
+				class="com.cpst.framework.base.RequestContextInterceptor" />
+
+			<interceptor-stack name="ps-default">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="requestContextInterceptor"></interceptor-ref>
+			</interceptor-stack>
+
+		</interceptors>
+
+		<default-interceptor-ref name="ps-default"></default-interceptor-ref>
+
+       
+	 <!-- 	<global-results>
+			<result name="javaException">/jsp/commons/javaException.jsp</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Throwable" result="javaException" />
+
+		</global-exception-mappings>   -->
+		 
+
+	</package>
+
+</struts>

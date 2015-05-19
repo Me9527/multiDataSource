@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-3-28 13:29:31 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.cpst.postal.settlement.user.model.BPermRolesLevel" table="B_PERM_ROLES_LEVEL" >
+        <id name="seqId" type="java.lang.Integer">
+            <column name="SEQ_ID" precision="6" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="roleId" type="java.lang.Integer">
+            <column name="ROLE_ID" precision="6" scale="0">
+               
+            </column>
+        </property>
+        <property name="positionsLevel" type="java.lang.Integer">
+            <column name="POSITIONS_LEVEL" precision="2" scale="0">
+            </column>
+        </property>
+        <property name="roleTypeId" type="java.lang.Integer">
+            <column name="ROLE_TYPE_ID" precision="2" scale="0">
+            </column>
+        </property>
+        <property name="subSys" type="string">
+            <column name="SUB_SYS" length="100">
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

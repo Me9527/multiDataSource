@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2012-12-6 15:33:40 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.cpst.postal.settlement.user.model.BUser" table="B_PERM_USERS" lazy="false" >
+		
+		<id name="seqId" type="java.lang.Integer" column="SEQ_ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_USER_PERM</param>
+			</generator>
+		</id>
+		
+		<property name="loginName" type="string">
+			<column name="LOGIN_NAME" length="16" />
+		</property>
+		<property name="password" type="string">
+			<column name="PASSWORD" length="64" />
+		</property>
+		<property name="realName" type="string">
+			<column name="REAL_NAME" length="16" />
+		</property>
+		<property name="tel" type="string">
+			<column name="TEL" length="16" />
+		</property>
+		<property name="EMail" type="string">
+			<column name="E_MAIL" length="32" />
+		</property>
+		<property name="emsOrCommon" type="java.lang.Integer">
+			<column name="EMS_OR_COMMON" precision="1" scale="0" />
+		</property>
+		<property name="dataEntryStaffFlag" type="java.lang.Integer">
+			<column name="DATA_ENTRY_STAFF_FLAG" precision="1" scale="0" />
+		</property>
+		<property name="positionsLevel" type="java.lang.Integer">
+			<column name="POSITIONS_LEVEL" precision="2" scale="0" />
+		</property>
+		<property name="code" type="string">
+			<column name="CODE" length="8" />
+		</property>
+		<property name="description" type="string">
+			<column name="DESCRIPTION" length="128" />
+		</property>
+
+		<property name="delFlag" type="string">
+			<column name="DEL_FLAG" />
+		</property>
+		<property name="createDate" type="timestamp">
+			<column name="CREATE_DATE" />
+		</property>
+		<set name="roles" table="B_PERM_USER_ROLE" lazy="false" cascade="none">
+			<key column="USER_ID" />
+			<many-to-many class="com.cpst.postal.settlement.user.model.BRole" column="ROLE_ID" />
+		</set>
+
+	</class>
+</hibernate-mapping>
