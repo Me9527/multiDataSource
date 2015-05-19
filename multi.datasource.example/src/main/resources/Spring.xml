@@ -7,12 +7,6 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
 	default-autowire="byName" default-lazy-init="false">
 
-
-	<!-- <import resource="classpath:cxf-servlet.xml" /> 
-	<import resource="classpath:META-INF/cxf/cxf.xml" />
-	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
-	-->
-	
 	<!-- 属性文件读入 -->
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -20,14 +14,12 @@
 			<list>
 				<value>classpath*:properties/jdbc.properties</value>
 				<value>classpath*:properties/hibernate.properties</value>
-				<value>classpath*:properties/ssh.properties</value>
-				<value>classpath*:properties/birt-config.properties</value>
 			</list>
 		</property>
 	</bean>
 
 	<!-- 数据源定义,使用Apache DBCP 连接池 -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	<bean id="dataSourceA" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
 		<property name="url" value="${jdbc.url}" />
@@ -42,9 +34,24 @@
 		<property name="testOnBorrow" value="true" />
 	</bean>
 
+	<bean id="dataSourceB" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc2.driverClassName}" />
+		<property name="url" value="${jdbc2.url}" />
+		<property name="username" value="${jdbc2.username}" />
+		<property name="password" value="${jdbc2.password}" />
+		<property name="maxActive" value="${jdbc2.maxActive}" />
+		<property name="maxIdle" value="30" />
+		<property name="maxWait" value="1000" />
+		<property name="defaultAutoCommit" value="false" />
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="60" />
+		<property name="testOnBorrow" value="true" />
+	</bean>
+	
 	<bean id="sessionFactory" class="com.cpst.framework.spring.LocalSessionFactoryBeanUsePathPatternMatchingConfigFile">
 		<property name="dataSource">
-			<ref bean="dataSource" />
+			<ref bean="dataSourceA" />
 		</property>
 
 		<property name="hibernateProperties">
@@ -73,13 +80,11 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<!-- <tx:annotation-driven/> <aop:aspectj-autoproxy/>
-	<bean id="operationalFlowAdvice" class="com.cpst.postal.settlement.estimate.util.OperationalFlowAdvice" />
-	<aop:config>
-		<aop:advisor pointcut="execution(* *..estimate.service.*Service.*(..))" advice-ref="operationalFlowAdvice" />
-	</aop:config>
-	 -->
-
+	<!-- 
+	<tx:annotation-driven/> 
+	<aop:aspectj-autoproxy/>
+ 	-->
+ 
 	<!-- 事务拦截方式 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
@@ -95,17 +100,15 @@
 		</tx:attributes>
 	</tx:advice>
 
-	<!-- 事务配置 
+	<!-- 事务配置 -->
 	<aop:config proxy-target-class="false">
-		<aop:pointcut id="projectServiceOperation"
-			expression="execution(* com.cpst.postal.settlement..*ServiceImpl.*(..))" />
-		<aop:advisor pointcut-ref="projectServiceOperation"
-			advice-ref="txAdvice" />
+		<aop:pointcut id="projectServiceOperation" expression="execution(* com.cpst.postal.settlement..*ServiceImpl.*(..))" />
+		<aop:advisor pointcut-ref="projectServiceOperation" advice-ref="txAdvice" />
 	</aop:config>
-	-->
+	
 	
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource"> <ref bean="dataSource"/> </property>
+        <property name="dataSource"> <ref bean="dataSourceA"/> </property>
     </bean>
 
 
