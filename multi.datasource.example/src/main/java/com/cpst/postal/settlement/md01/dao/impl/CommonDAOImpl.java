@@ -1,4 +1,4 @@
-package com.cpst.postal.settlement.md.dao.impl;
+package com.cpst.postal.settlement.md01.dao.impl;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -10,7 +10,7 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
 import com.cpst.framework.base.BaseDAO;
-import com.cpst.postal.settlement.user.dao.ICommonDAO;
+import com.cpst.postal.settlement.md01.dao.ICommonDAO;
 
 public class CommonDAOImpl extends BaseDAO implements ICommonDAO {
 

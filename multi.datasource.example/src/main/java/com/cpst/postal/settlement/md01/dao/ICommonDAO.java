@@ -1,4 +1,4 @@
-package com.cpst.postal.settlement.md1.dao;
+package com.cpst.postal.settlement.md01.dao;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,10 +10,6 @@ public interface ICommonDAO {
 	void update(Object data);
 	
 	void delById(Class<?> clazz, Serializable id);
-	
-	void delByIdHistory(Class<?> clazz, Serializable id);
-	
-	void updateHistory(Object data);
 	
 	List<?> find(String queryString, Object... values);
 	

@@ -1,4 +1,4 @@
-package com.cpst.postal.settlement.md.util;
+package com.cpst.postal.settlement.md01.util;
 
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 

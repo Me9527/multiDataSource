@@ -1,4 +1,4 @@
-package com.cpst.postal.settlement.md.services.impl;
+package com.cpst.postal.settlement.md01.services.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,23 +7,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import com.cpst.framework.base.Constants;
 import com.cpst.framework.base.Page;
 import com.cpst.framework.base.ReqContextHolder;
 import com.cpst.framework.base.exception.DAOLayerException;
+import com.cpst.postal.settlement.md01.dao.ICommonDAO;
+import com.cpst.postal.settlement.md01.services.IMd01Service;
 import com.cpst.postal.settlement.user.dao.IBUsersDAO;
-import com.cpst.postal.settlement.user.dao.ICommonDAO;
 import com.cpst.postal.settlement.user.model.BPermExchangeOffice;
 import com.cpst.postal.settlement.user.model.BPermProvCity;
 import com.cpst.postal.settlement.user.model.BResourcePermission;
 import com.cpst.postal.settlement.user.model.BRole;
 import com.cpst.postal.settlement.user.model.BUser;
-import com.cpst.postal.settlement.user.services.IUserService;
 import com.cpst.postal.settlement.user.util.PasswordEncoderUtil;
 
-public class UserServiceImpl implements IUserService {
+public class Md01ServiceImpl implements IMd01Service {
 	private ICommonDAO commonDAO;
 	private IBUsersDAO bUsersDAO;
+	private JdbcTemplate jdbcTemplate;
 	
     private  String defulPassword;
 
@@ -41,6 +44,14 @@ public class UserServiceImpl implements IUserService {
 
 	public void setCommonDAO(ICommonDAO commonDAO) {
 		this.commonDAO = commonDAO;
+	}
+
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.cpst.postal.settlement.md.model;
+package com.cpst.postal.settlement.md01.model;
 
 import java.util.Date;
 import java.util.Set;
@@ -41,19 +41,6 @@ public class BUser implements java.io.Serializable {
 
 	public void setDelFlag(String delFlag) {
 		this.delFlag = delFlag;
-	}
-
-	private Set<BRole> roles;
-
-	public BUser() {
-	}
-
-	public Set<BRole> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<BRole> roles) {
-		this.roles = roles;
 	}
 
 	/**  

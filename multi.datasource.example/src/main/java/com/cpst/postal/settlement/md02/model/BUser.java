@@ -1,4 +1,4 @@
-package com.cpst.postal.settlement.md1.model;
+package com.cpst.postal.settlement.md02.model;
 
 import java.util.Date;
 

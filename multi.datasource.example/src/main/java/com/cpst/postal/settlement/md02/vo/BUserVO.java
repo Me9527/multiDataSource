@@ -1,4 +1,4 @@
-package com.cpst.postal.settlement.md1.vo;
+package com.cpst.postal.settlement.md02.vo;
 
 import java.util.Map;
 import java.util.Set;
