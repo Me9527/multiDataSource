@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+ 
+<struts>
+
+	<package name="md01" namespace="/md01" extends="ps-default">
+		<action name="Md01TwoAction_*" class="Md01TwoAction" method="{1}" />
+	</package>
+	
+	
+</struts>

@@ -13,7 +13,7 @@ import com.cpst.framework.base.Constants;
 import com.cpst.framework.base.Page;
 import com.cpst.framework.base.ReqContextHolder;
 import com.cpst.framework.base.exception.DAOLayerException;
-import com.cpst.postal.settlement.md02.dao.ICommonDAO;
+import com.cpst.postal.settlement.md02.dao.IMd02CommonDAO;
 import com.cpst.postal.settlement.md02.services.IMd02Service;
 import com.cpst.postal.settlement.user.dao.IBUsersDAO;
 import com.cpst.postal.settlement.user.model.BPermExchangeOffice;
@@ -24,7 +24,7 @@ import com.cpst.postal.settlement.user.model.BUser;
 import com.cpst.postal.settlement.user.util.PasswordEncoderUtil;
 
 public class Md02ServiceImpl implements IMd02Service {
-	private ICommonDAO commonDAO;
+	private IMd02CommonDAO md02CommonDAO;
 	private IBUsersDAO bUsersDAO;
 	private JdbcTemplate jdbcTemplate;
 	
@@ -38,12 +38,12 @@ public class Md02ServiceImpl implements IMd02Service {
 		this.defulPassword = defulPassword;
 	}
 
-	public ICommonDAO getCommonDAO() {
-		return commonDAO;
+	public IMd02CommonDAO getCommonDAO() {
+		return md02CommonDAO;
 	}
 
-	public void setCommonDAO(ICommonDAO commonDAO) {
-		this.commonDAO = commonDAO;
+	public void setCommonDAO(IMd02CommonDAO md02CommonDAO) {
+		this.md02CommonDAO = md02CommonDAO;
 	}
 
 	public JdbcTemplate getJdbcTemplate() {
@@ -56,13 +56,13 @@ public class Md02ServiceImpl implements IMd02Service {
 
 	@Override
 	public void addData(Object data) {
-		commonDAO.addData(data);
+		md02CommonDAO.addData(data);
 
 	}
 
 	@Override
 	public void update(Object data) {
-		commonDAO.update(data);
+		md02CommonDAO.update(data);
 
 	}
 
@@ -75,7 +75,7 @@ public class Md02ServiceImpl implements IMd02Service {
 		in = in.substring(0, in.length()-1);
 		in = " ( " + in +" ) ";
 		StringBuffer sb = new StringBuffer(" update " + clazz.getSimpleName() + " m " +" set m.delFlag='2' " + " where m.seqId in " + in );	//2 表示删除
-		commonDAO.bulkUpdate(sb.toString());
+		md02CommonDAO.bulkUpdate(sb.toString());
 		
 //		for(Integer id: seqIds){
 //			commonDAO.delById(clazz, id);
@@ -88,10 +88,10 @@ public class Md02ServiceImpl implements IMd02Service {
 //		List<BUser> rs = (List<BUser>) commonDAO.find(hql);
 //		BUser user = rs.get(0);
 //		
-		BUser user = (BUser)commonDAO.load(BUser.class, userId);
+		BUser user = (BUser)md02CommonDAO.load(BUser.class, userId);
 		String np = PasswordEncoderUtil.md5Encode(newPs);
 		user.setPassword(np);
-		commonDAO.update(user);
+		md02CommonDAO.update(user);
 	}
 	
 	@Override
@@ -138,15 +138,15 @@ public class Md02ServiceImpl implements IMd02Service {
 	private void updateRoles(){
 		String hql = "from BRole m where m.seqId = 8";
 		@SuppressWarnings("unchecked")
-		List<BRole> roles = (List<BRole>) commonDAO.find(hql);
+		List<BRole> roles = (List<BRole>) md02CommonDAO.find(hql);
 		BRole role = (BRole)roles.get(0);
 		hql = "from BResourcePermission ";
 		@SuppressWarnings("unchecked")
-		List<BResourcePermission> rps = (List<BResourcePermission>) commonDAO.find(hql);
+		List<BResourcePermission> rps = (List<BResourcePermission>) md02CommonDAO.find(hql);
 		Set<BResourcePermission> resourcePermissions = new HashSet<BResourcePermission>();
 		resourcePermissions.addAll(rps);
 		role.setResourcePermissions(resourcePermissions);
-		commonDAO.update(role);
+		md02CommonDAO.update(role);
 	}
 	
 	private void saveRoles(){
@@ -179,7 +179,7 @@ public class Md02ServiceImpl implements IMd02Service {
 		rp.setPermission("perm_");
 		rp.setResources("");
 		rp.setRType(10);
-		commonDAO.addData(rp);
+		md02CommonDAO.addData(rp);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -187,12 +187,12 @@ public class Md02ServiceImpl implements IMd02Service {
 		String passwd = PasswordEncoderUtil.md5Encode("123");
 		
 		String hql = "from BRole m where m.name = '" + "速递管理员" + "'";
-		List<BRole> role = (List<BRole>) commonDAO.find(hql);
+		List<BRole> role = (List<BRole>) md02CommonDAO.find(hql);
 		if(role.size() > 1) 
 			throw new DAOLayerException("addEmsDataInputer");
 		
 		hql = "from BPermProvCity";
-		List<BPermProvCity> provs = (List<BPermProvCity>) commonDAO.find(hql);
+		List<BPermProvCity> provs = (List<BPermProvCity>) md02CommonDAO.find(hql);
 		Set<String> t = new HashSet<String>();
 		int i = 1;
 		for(BPermProvCity prov: provs){
@@ -217,7 +217,7 @@ public class Md02ServiceImpl implements IMd02Service {
 				roles.add(role.get(0));
 				user.setRoles(roles);
 				user.setTel("010-66668888");
-				commonDAO.addData(user);
+				md02CommonDAO.addData(user);
 			}
 		}
 	}
@@ -226,13 +226,13 @@ public class Md02ServiceImpl implements IMd02Service {
 	private void delEmsDataPronvinceManager(){
 		
 		String hql = "from BUser";
-		List<BUser> users = (List<BUser>) commonDAO.find(hql);
+		List<BUser> users = (List<BUser>) md02CommonDAO.find(hql);
 
 		for(BUser u: users){
 			if(u.getRoles().size() == 1)
 				if(u.getRoles().iterator().next().getName().equals("速递管理员")
 						&& u.getPositionsLevel() == Constants.PROVINCE_RANK)
-					commonDAO.delById(BUser.class, u.getSeqId());
+					md02CommonDAO.delById(BUser.class, u.getSeqId());
 					
 		}
 	}
@@ -242,12 +242,12 @@ public class Md02ServiceImpl implements IMd02Service {
 		String passwd = PasswordEncoderUtil.md5Encode("123");
 		
 		String hql = "from BRole m where m.name = '" + "速递录入员" + "'";
-		List<BRole> role = (List<BRole>) commonDAO.find(hql);
+		List<BRole> role = (List<BRole>) md02CommonDAO.find(hql);
 		if(role.size() > 1) 
 			throw new DAOLayerException("addEmsDataInputer");
 		
 		hql = "from BPermExchangeOffice";
-		List<BPermExchangeOffice> exchanges = (List<BPermExchangeOffice>) commonDAO.find(hql);
+		List<BPermExchangeOffice> exchanges = (List<BPermExchangeOffice>) md02CommonDAO.find(hql);
 
 		for(BPermExchangeOffice off: exchanges){
 			BUser user = new BUser();
@@ -263,7 +263,7 @@ public class Md02ServiceImpl implements IMd02Service {
 			roles.add(role.get(0));
 			user.setRoles(roles);
 			user.setTel("010-66668888");
-			commonDAO.addData(user);
+			md02CommonDAO.addData(user);
 		}
 	}
 	
@@ -271,13 +271,13 @@ public class Md02ServiceImpl implements IMd02Service {
 	private void delEmsDataInputer(){
 		
 		String hql = "from BUser";
-		List<BUser> users = (List<BUser>) commonDAO.find(hql);
+		List<BUser> users = (List<BUser>) md02CommonDAO.find(hql);
 
 		for(BUser u: users){
 			if(u.getRoles().size() == 1)
 				if(u.getRoles().iterator().next().getName().equals("速递录入员")
 						&& u.getPositionsLevel() == Constants.EXCHANGE_OFFICE_RANK)
-					commonDAO.delById(BUser.class, u.getSeqId());
+					md02CommonDAO.delById(BUser.class, u.getSeqId());
 					
 		}
 	}
@@ -287,12 +287,12 @@ public class Md02ServiceImpl implements IMd02Service {
 		String passwd = PasswordEncoderUtil.md5Encode("123");
 		
 		String hql = "from BRole m where m.name = '" + "速递管理员" + "'";
-		List<BRole> role = (List<BRole>) commonDAO.find(hql);
+		List<BRole> role = (List<BRole>) md02CommonDAO.find(hql);
 		if(role.size() > 1) 
 			throw new DAOLayerException("addEmsDataInputer");
 		
 		hql = "from BPermExchangeOffice";
-		List<BPermExchangeOffice> exchanges = (List<BPermExchangeOffice>) commonDAO.find(hql);
+		List<BPermExchangeOffice> exchanges = (List<BPermExchangeOffice>) md02CommonDAO.find(hql);
 
 		for(BPermExchangeOffice off: exchanges){
 			BUser user = new BUser();
@@ -308,7 +308,7 @@ public class Md02ServiceImpl implements IMd02Service {
 			roles.add(role.get(0));
 			user.setRoles(roles);
 			user.setTel("010-66668888");
-			commonDAO.addData(user);
+			md02CommonDAO.addData(user);
 		}
 	}
 	
@@ -316,20 +316,20 @@ public class Md02ServiceImpl implements IMd02Service {
 	private void delEmsDataManager(){
 		
 		String hql = "from BUser";
-		List<BUser> users = (List<BUser>) commonDAO.find(hql);
+		List<BUser> users = (List<BUser>) md02CommonDAO.find(hql);
 
 		for(BUser u: users){
 			if(u.getRoles().size() == 1)
 				if(u.getRoles().iterator().next().getName().equals("速递管理员")
 						&& u.getPositionsLevel() == Constants.EXCHANGE_OFFICE_RANK)
-					commonDAO.delById(BUser.class, u.getSeqId());
+					md02CommonDAO.delById(BUser.class, u.getSeqId());
 					
 		}
 	}
 	
 	private void addCommonDataInputer(String s, Object data){
 		String hql = "from BRole m where m.name = '" + "普邮录入员 " + "'";
-		List<BRole> rs = (List<BRole>) commonDAO.find(hql);
+		List<BRole> rs = (List<BRole>) md02CommonDAO.find(hql);
 		
 		
 	}
@@ -423,7 +423,7 @@ public class Md02ServiceImpl implements IMd02Service {
 		if(bcode!=null&&!bcode.equals("")){
 			hql+=" where BProvcode="+bcode;
 		}
-		List<BPermExchangeOffice> rs = (List<BPermExchangeOffice>) commonDAO.find(hql);
+		List<BPermExchangeOffice> rs = (List<BPermExchangeOffice>) md02CommonDAO.find(hql);
 		return rs;
 		
 	}
@@ -437,13 +437,13 @@ public class Md02ServiceImpl implements IMd02Service {
 		if(citycode!=null&&!citycode.equals("")){
 			hql+=" where BCitycode="+citycode;
 		}
-		List<BPermExchangeOffice> rs = (List<BPermExchangeOffice>) commonDAO.find(hql);
+		List<BPermExchangeOffice> rs = (List<BPermExchangeOffice>) md02CommonDAO.find(hql);
 		return rs;
 		
 	}
 	public List<BPermProvCity>  provinceInputer(){
 		String hql = "select distinct   substr(districtCode,0,2) as districtCode,provinceName as provinceName from BPermProvCity  order by districtCode ";
-		List<Object[]> rs = (List<Object[]>) commonDAO.find(hql);
+		List<Object[]> rs = (List<Object[]>) md02CommonDAO.find(hql);
 		List<BPermProvCity> list=new ArrayList();
 		for(Object[] bj: rs){
 			BPermProvCity bppc= new   BPermProvCity();
@@ -466,7 +466,7 @@ public class Md02ServiceImpl implements IMd02Service {
 			hql+=" and  districtCode  like '" + provinceid + "%'  ";
 			
 		}
-		List<Object[]> rs = (List<Object[]>) commonDAO.find(hql);
+		List<Object[]> rs = (List<Object[]>) md02CommonDAO.find(hql);
 		List<BPermProvCity> list=new ArrayList();
 		for(Object[] bj: rs){
 			BPermProvCity bppc= new   BPermProvCity();
@@ -484,7 +484,7 @@ public class Md02ServiceImpl implements IMd02Service {
 	} 
 	public List<BPermProvCity>  cityInputer(){
 		String hql = "select distinct   substr(districtCode,0,4) as districtCode,cityName as cityName from BPermProvCity where degree='2'";
-		List<Object[]> rs = (List<Object[]>) commonDAO.find(hql);
+		List<Object[]> rs = (List<Object[]>) md02CommonDAO.find(hql);
 		List<BPermProvCity> list=new ArrayList();
 		for(Object[] bj: rs){
 			BPermProvCity bppc= new   BPermProvCity();
@@ -500,7 +500,7 @@ public class Md02ServiceImpl implements IMd02Service {
 	} 
 	public List<BPermProvCity>  cityInputer(String provinceid){
 		String hql = "select distinct   substr(districtCode,0,4) as districtCode,cityName as cityName from BPermProvCity where degree='2' and districtCode like '"+provinceid+"%' ";
-		List<Object[]> rs = (List<Object[]>) commonDAO.find(hql);
+		List<Object[]> rs = (List<Object[]>) md02CommonDAO.find(hql);
 		List<BPermProvCity> list=new ArrayList();
 		
 		for(Object[] bj: rs){
@@ -520,7 +520,7 @@ public class Md02ServiceImpl implements IMd02Service {
 	
 	public List<BPermProvCity>  cityInputerbycityCode(String cityCode){
 		String hql = "select distinct   substr(districtCode,0,4) as districtCode,cityName as cityName from BPermProvCity where degree='2' and districtCode like '"+cityCode+"%' ";
-		List<Object[]> rs = (List<Object[]>) commonDAO.find(hql);
+		List<Object[]> rs = (List<Object[]>) md02CommonDAO.find(hql);
 		List<BPermProvCity> list=new ArrayList();
 		
 		for(Object[] bj: rs){
@@ -539,7 +539,7 @@ public class Md02ServiceImpl implements IMd02Service {
 	}
 	public List<BPermProvCity>  provinceInputeronseclect(){
 		String hql = "select distinct   substr(districtCode,0,2) as districtCode,provinceName as provinceName from BPermProvCity order by districtCode ";
-		List<Object[]> rs = (List<Object[]>) commonDAO.find(hql);
+		List<Object[]> rs = (List<Object[]>) md02CommonDAO.find(hql);
 		List<BPermProvCity> list=new ArrayList();
 		
 		BPermProvCity bppc2= new   BPermProvCity();
@@ -562,19 +562,19 @@ public class Md02ServiceImpl implements IMd02Service {
 	} 
 	public List<BRole>  roleInputer(){
 		String hql = "from BRole m ";
-		List<BRole> rs = (List<BRole>) commonDAO.find(hql);
+		List<BRole> rs = (List<BRole>) md02CommonDAO.find(hql);
 		return rs;
 		
 	}
 	public List<BResourcePermission>  bResourcePermissionInputer(){
 		String hql = "from BResourcePermission m ";
-		List<BResourcePermission> rs = (List<BResourcePermission>) commonDAO.find(hql);
+		List<BResourcePermission> rs = (List<BResourcePermission>) md02CommonDAO.find(hql);
 		return rs;
 		
 	}
 	public List<BResourcePermission>  bResourcePermissionInputer(String seqId){
 		String hql = "from BResourcePermission m where seqId in ("+seqId+")";
-		List<BResourcePermission> rs = (List<BResourcePermission>) commonDAO.find(hql);
+		List<BResourcePermission> rs = (List<BResourcePermission>) md02CommonDAO.find(hql);
 		return rs;
 		
 	}
@@ -584,7 +584,7 @@ public class Md02ServiceImpl implements IMd02Service {
 	    	roleid=roleid.substring(1);
 	    }
 		String hql = "from BRole m  where seqId in ("+roleid+")";
-		List<BRole> rs = (List<BRole>) commonDAO.find(hql);
+		List<BRole> rs = (List<BRole>) md02CommonDAO.find(hql);
 		return rs;
 		
 	}
@@ -606,13 +606,13 @@ public class Md02ServiceImpl implements IMd02Service {
 		if(bcode!=null&&!bcode.equals("")){
 			hql+=" where BCode='"+bcode+"'";
 		}
-		List<BPermExchangeOffice> rs = (List<BPermExchangeOffice>) commonDAO.find(hql);
+		List<BPermExchangeOffice> rs = (List<BPermExchangeOffice>) md02CommonDAO.find(hql);
 		return rs;
 		
 	}
 	public 	List<BRole>  findroles(String userId ){
 		String 	hql = "from BRole m  where seqId in (select roleId from BPermUserRole where userId="+userId+")";
-		List<BRole> rs = (List<BRole>) commonDAO.find(hql);
+		List<BRole> rs = (List<BRole>) md02CommonDAO.find(hql);
 		return rs;
 	}
 	/**
@@ -620,17 +620,17 @@ public class Md02ServiceImpl implements IMd02Service {
 	 */
 	public List<BRole>  findroleprovunder(){
 		String hql = "from BRole m where seqId not in (4,5)";
-		List<BRole> rs = (List<BRole>) commonDAO.find(hql);
+		List<BRole> rs = (List<BRole>) md02CommonDAO.find(hql);
 		return rs;		
 	}
 	public List<BUser>  findbyUserLoginName(String loginName){
 		String hql = "from BUser m where loginName='"+loginName+"'";
-		List<BUser> rs = (List<BUser>) commonDAO.find(hql);
+		List<BUser> rs = (List<BUser>) md02CommonDAO.find(hql);
 		return rs;		
 	}
 	public List<BUser>  findbyUpdateUserLoginName(String loginName,Integer loginSeqId){
 		String hql = "from BUser m where loginName='"+loginName+"' and seqId not in ("+loginSeqId+")";
-		List<BUser> rs = (List<BUser>) commonDAO.find(hql);
+		List<BUser> rs = (List<BUser>) md02CommonDAO.find(hql);
 		return rs;		
 	}
 	public BUser loadBUSer(Integer userId){
@@ -638,7 +638,7 @@ public class Md02ServiceImpl implements IMd02Service {
 //		List<BUser> rs = (List<BUser>) commonDAO.find(hql);
 //		BUser user = rs.get(0);
 //		
-		BUser user = (BUser)commonDAO.load(BUser.class, userId);
+		BUser user = (BUser)md02CommonDAO.load(BUser.class, userId);
 		//String np = PasswordEncoderUtil.md5Encode(newPs);
 		//user.setPassword(np);
 		//commonDAO.update(user);
@@ -647,7 +647,7 @@ public class Md02ServiceImpl implements IMd02Service {
 	public void addUser(BUser buser) {
 		String np = PasswordEncoderUtil.md5Encode(this.defulPassword);
 		buser.setPassword(np);
-		commonDAO.addData(buser);
+		md02CommonDAO.addData(buser);
 
 	}
 	
@@ -660,7 +660,7 @@ public class Md02ServiceImpl implements IMd02Service {
 		in = " ( " + in +" ) ";
 		String np = PasswordEncoderUtil.md5Encode(this.defulPassword);
 		StringBuffer sb = new StringBuffer(" update " + clazz.getSimpleName() + " m " +" set m.password='"+np+"' " + " where m.seqId in " + in );	//2 表示删除
-		commonDAO.bulkUpdate(sb.toString());
+		md02CommonDAO.bulkUpdate(sb.toString());
 		
 //		for(Integer id: seqIds){
 //			commonDAO.delById(clazz, id);
@@ -673,7 +673,7 @@ public class Md02ServiceImpl implements IMd02Service {
 	 */
 	public List<BRole>  findrolebyLevelId(Integer levelId){
 		String hql = "from BRole m where seqId  in (select roleId from BPermRolesLevel where positionsLevel>"+levelId+"  or (positionsLevel="+levelId+" and roleTypeId!=0) )";
-		List<BRole> rs = (List<BRole>) commonDAO.find(hql);
+		List<BRole> rs = (List<BRole>) md02CommonDAO.find(hql);
 		return rs;		
 	}
 }

@@ -10,9 +10,9 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
 import com.cpst.framework.base.BaseDAO;
-import com.cpst.postal.settlement.md02.dao.ICommonDAO;
+import com.cpst.postal.settlement.md02.dao.IMd02CommonDAO;
 
-public class CommonDAOImpl extends BaseDAO implements ICommonDAO {
+public class Md02CommonDAOImpl extends BaseDAO implements IMd02CommonDAO {
 
 	public int bulkUpdate(String queryString, Object... values) {
 		return getHibernateTemplate().bulkUpdate(queryString, values);

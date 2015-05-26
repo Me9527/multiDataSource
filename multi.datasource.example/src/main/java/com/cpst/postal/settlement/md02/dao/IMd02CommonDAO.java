@@ -1,10 +1,10 @@
-package com.cpst.postal.settlement.md01.dao;
+package com.cpst.postal.settlement.md02.dao;
 
 import java.io.Serializable;
 import java.util.List;
 
-public interface ICommonDAO {
-
+public interface IMd02CommonDAO {
+	
 	void addData(Object data);
 	
 	void update(Object data);
@@ -17,8 +17,8 @@ public interface ICommonDAO {
 	
 	Long findTotal(final String hql, List<Object> values);
 	
-	List<?> findByPage(final String hql, final Integer offset,final Integer pageSize, List<Object> values);
-		
+	List<?> findByPage(final String hql, final Integer offset, final Integer pageSize, List<Object> values);
+	
 	int bulkUpdate(String queryString, Object... values);
 	
 	@SuppressWarnings("rawtypes")
