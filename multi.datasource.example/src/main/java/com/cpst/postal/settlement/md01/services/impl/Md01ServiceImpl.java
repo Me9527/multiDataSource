@@ -38,11 +38,11 @@ public class Md01ServiceImpl implements IMd01Service {
 		this.defulPassword = defulPassword;
 	}
 
-	public IMd01CommonDAO getCommonDAO() {
+	public IMd01CommonDAO getMd01CommonDAO() {
 		return md01CommonDAO;
 	}
 
-	public void setCommonDAO(IMd01CommonDAO md01CommonDAO) {
+	public void setMd01CommonDAO(IMd01CommonDAO md01CommonDAO) {
 		this.md01CommonDAO = md01CommonDAO;
 	}
 

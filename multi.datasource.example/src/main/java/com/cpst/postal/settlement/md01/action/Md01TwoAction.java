@@ -12,7 +12,7 @@ public class Md01TwoAction extends BaseAction {
 	private IMd01Service md01Service;
 	
 	public void testAJson() throws Exception {
-		
+		md01Service.update(null);
 		JsonUtil.toStringShortDateFormat("success");
 	}
 	

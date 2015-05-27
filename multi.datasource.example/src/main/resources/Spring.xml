@@ -126,6 +126,12 @@
 		<aop:advisor pointcut-ref="projectServiceOperation" advice-ref="txAdvice" />
 	</aop:config>
 	
+	<bean id="multiDataSourceRoute" class="com.cpst.framework.spring.MultiDataSourceRoute" />
+	
+	<aop:config>
+		<aop:advisor pointcut="execution(* com.cpst.postal.settlement..*ServiceImpl.*(..))" advice-ref="multiDataSourceRoute" />
+	</aop:config>
+	
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource"> <ref bean="dataSource"/> </property>
     </bean>
