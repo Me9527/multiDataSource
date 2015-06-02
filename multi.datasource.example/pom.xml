@@ -13,10 +13,19 @@
 		<servlet-api-version>2.5</servlet-api-version>
 		<jsp-api.version>2.1</jsp-api.version>
 		<hibernate.version>3.6.10.Final</hibernate.version>
+		<jdbc_home>C:\Users\user\Desktop\comm-post-sett\web-iisips-bizma\lib</jdbc_home>
 	</properties>
 
 	<dependencies>
-
+		<!--  
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc</artifactId>
+			<version>14</version>
+			<scope>system</scope>
+			<systemPath>${jdbc_home}/ojdbc14.jar</systemPath> 
+		</dependency>
+		-->
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
@@ -232,8 +241,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.2</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 		</plugins>
